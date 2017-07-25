@@ -48,9 +48,13 @@ var server = http.createServer(function (request, response) {
         filePath = 'public' + request.url;
     }
     var absPath = './' + filePath;
+    console.log(absPath);
     serveStatic(response, cache, absPath);
 });
 
 server.listen(9000, function () {  
     console.log('server listening on port 9000');
 });
+
+var chatServer = require('./lib/chat_server');
+chatServer.listen(server);
