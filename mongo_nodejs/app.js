@@ -1,11 +1,15 @@
-var http = require('http');
+var MongoClient = require('mongodb').MongoClient;
+    assert = require('assert');
 
-var server = http.createServer(function(request, response) {
-    response.writeHead(200, {"content-type": "text/plain"});
-    response.end('hello');
+MongoClient.connect('mongodb://localhost:27017/video', function (err, db) {
+    assert.equal(null, err);
+    console.log('Successfully connects');
+
+db.collection('movies').find({}).toArray(function (err, docs) {  
+        docs.forEach(function (doc) {
+            console.log(doc.title);
+        });
+
+        db.close();
+    });
 });
-
-server.listen(3000);
-
-
-console.log('server listening on 3000');
